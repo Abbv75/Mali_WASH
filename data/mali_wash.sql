@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mar. 21 juin 2022 à 22:01
+-- Généré le :  jeu. 23 juin 2022 à 00:01
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.3.11
 
@@ -29,11 +29,18 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `client` (
-  `id` int(11) NOT NULL,
-  `nom` varchar(30) DEFAULT 'mr(mlle)',
-  `prenom` varchar(30) DEFAULT 'mr(mlle)',
+  `idClient` int(11) NOT NULL,
+  `nomClient` varchar(30) DEFAULT 'mr(mlle)',
+  `prenomClient` varchar(30) DEFAULT 'mr(mlle)',
   `id_contact` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `client`
+--
+
+INSERT INTO `client` (`idClient`, `nomClient`, `prenomClient`, `id_contact`) VALUES
+(1, 'bore', 'younouss', 1);
 
 -- --------------------------------------------------------
 
@@ -42,10 +49,17 @@ CREATE TABLE `client` (
 --
 
 CREATE TABLE `contact` (
-  `id` int(11) NOT NULL,
+  `idContact` int(11) NOT NULL,
   `telephone` varchar(15) DEFAULT NULL,
   `email` varchar(60) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `contact`
+--
+
+INSERT INTO `contact` (`idContact`, `telephone`, `email`) VALUES
+(1, '66035300', 'bore.younous59@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -54,16 +68,24 @@ CREATE TABLE `contact` (
 --
 
 CREATE TABLE `depot` (
-  `id` int(11) NOT NULL,
+  `idDepot` int(11) NOT NULL,
   `date_depot` datetime NOT NULL DEFAULT current_timestamp(),
   `nombre_de_jour` int(11) DEFAULT NULL,
   `date_retrait` datetime NOT NULL,
-  `prix` int(11) NOT NULL,
+  `prixTotal` int(11) NOT NULL,
+  `paye` int(11) NOT NULL DEFAULT 0,
   `quantite_total` int(11) NOT NULL,
   `statut_paiment` tinyint(1) NOT NULL DEFAULT 0,
   `id_client` int(11) DEFAULT NULL,
   `id_pressing` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `depot`
+--
+
+INSERT INTO `depot` (`idDepot`, `date_depot`, `nombre_de_jour`, `date_retrait`, `prixTotal`, `paye`, `quantite_total`, `statut_paiment`, `id_client`, `id_pressing`) VALUES
+(1, '2022-06-21 22:10:18', NULL, '2022-06-23 00:00:00', 5000, 0, 7, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -72,15 +94,22 @@ CREATE TABLE `depot` (
 --
 
 CREATE TABLE `pressing` (
-  `id` int(11) NOT NULL,
-  `nom` varchar(30) NOT NULL,
+  `idPressing` int(11) NOT NULL,
+  `nomPressing` varchar(30) NOT NULL,
   `statut_abonnement` tinyint(1) NOT NULL DEFAULT 1,
   `date_inscription` datetime NOT NULL DEFAULT current_timestamp(),
   `id_user` int(11) NOT NULL,
   `id_contact` int(11) DEFAULT NULL,
   `montantInscription` int(5) NOT NULL DEFAULT 10000,
-  `paye` int(5) NOT NULL DEFAULT 0
+  `SommeInscriptionPaye` int(5) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `pressing`
+--
+
+INSERT INTO `pressing` (`idPressing`, `nomPressing`, `statut_abonnement`, `date_inscription`, `id_user`, `id_contact`, `montantInscription`, `SommeInscriptionPaye`) VALUES
+(1, 'pressing coulou', 1, '2022-06-21 22:08:18', 1, 1, 10000, 10000);
 
 -- --------------------------------------------------------
 
@@ -89,11 +118,19 @@ CREATE TABLE `pressing` (
 --
 
 CREATE TABLE `type_vetement` (
-  `id` int(11) NOT NULL,
-  `nom` varchar(30) NOT NULL,
-  `prix` int(9) NOT NULL,
+  `idTypeVetement` int(11) NOT NULL,
+  `nomTypeVetement` varchar(30) NOT NULL,
+  `prixTypeVetement` int(9) NOT NULL,
   `id_pressing` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `type_vetement`
+--
+
+INSERT INTO `type_vetement` (`idTypeVetement`, `nomTypeVetement`, `prixTypeVetement`, `id_pressing`) VALUES
+(1, 'tshirt', 1000, 1),
+(2, 'chemise', 2000, 1);
 
 -- --------------------------------------------------------
 
@@ -102,14 +139,21 @@ CREATE TABLE `type_vetement` (
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `nom` varchar(45) NOT NULL,
-  `prenom` varchar(45) NOT NULL,
+  `idUser` int(11) NOT NULL,
+  `nomUser` varchar(45) NOT NULL,
+  `prenomUser` varchar(45) NOT NULL,
   `login` varchar(30) NOT NULL,
   `mot_de_pass` varchar(30) NOT NULL,
   `role` varchar(16) NOT NULL DEFAULT 'gerant',
   `id_contact` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `user`
+--
+
+INSERT INTO `user` (`idUser`, `nomUser`, `prenomUser`, `login`, `mot_de_pass`, `role`, `id_contact`) VALUES
+(1, 'bore', 'younouss', '66035300', '123456', 'gerant', 1);
 
 -- --------------------------------------------------------
 
@@ -118,11 +162,19 @@ CREATE TABLE `user` (
 --
 
 CREATE TABLE `vetement_depose` (
-  `id` int(11) NOT NULL,
-  `quantite` int(11) NOT NULL,
+  `idVetementDepose` int(11) NOT NULL,
+  `quantiteVetementDepose` int(11) NOT NULL,
   `id_type_vetement` int(11) NOT NULL,
   `id_depot` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `vetement_depose`
+--
+
+INSERT INTO `vetement_depose` (`idVetementDepose`, `quantiteVetementDepose`, `id_type_vetement`, `id_depot`) VALUES
+(1, 2, 1, 1),
+(2, 5, 2, 1);
 
 --
 -- Index pour les tables déchargées
@@ -132,20 +184,20 @@ CREATE TABLE `vetement_depose` (
 -- Index pour la table `client`
 --
 ALTER TABLE `client`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`idClient`),
   ADD KEY `client_contact` (`id_contact`);
 
 --
 -- Index pour la table `contact`
 --
 ALTER TABLE `contact`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`idContact`);
 
 --
 -- Index pour la table `depot`
 --
 ALTER TABLE `depot`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`idDepot`),
   ADD KEY `deposeur` (`id_client`),
   ADD KEY `depot_chez_pressing` (`id_pressing`);
 
@@ -153,7 +205,7 @@ ALTER TABLE `depot`
 -- Index pour la table `pressing`
 --
 ALTER TABLE `pressing`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`idPressing`),
   ADD KEY `contact_pressing` (`id_contact`),
   ADD KEY `proprietaire` (`id_user`);
 
@@ -161,21 +213,21 @@ ALTER TABLE `pressing`
 -- Index pour la table `type_vetement`
 --
 ALTER TABLE `type_vetement`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`idTypeVetement`),
   ADD KEY `pressing_du_type` (`id_pressing`);
 
 --
 -- Index pour la table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`idUser`),
   ADD KEY `user_contact` (`id_contact`);
 
 --
 -- Index pour la table `vetement_depose`
 --
 ALTER TABLE `vetement_depose`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`idVetementDepose`),
   ADD KEY `vetement_du_depot` (`id_depot`),
   ADD KEY `type_vetement` (`id_type_vetement`);
 
@@ -187,43 +239,43 @@ ALTER TABLE `vetement_depose`
 -- AUTO_INCREMENT pour la table `client`
 --
 ALTER TABLE `client`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idClient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idContact` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `depot`
 --
 ALTER TABLE `depot`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idDepot` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `pressing`
 --
 ALTER TABLE `pressing`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPressing` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `type_vetement`
 --
 ALTER TABLE `type_vetement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTypeVetement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `vetement_depose`
 --
 ALTER TABLE `vetement_depose`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idVetementDepose` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Contraintes pour les tables déchargées
@@ -233,40 +285,40 @@ ALTER TABLE `vetement_depose`
 -- Contraintes pour la table `client`
 --
 ALTER TABLE `client`
-  ADD CONSTRAINT `client_contact` FOREIGN KEY (`id_contact`) REFERENCES `contact` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `client_contact` FOREIGN KEY (`id_contact`) REFERENCES `contact` (`idContact`) ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `depot`
 --
 ALTER TABLE `depot`
-  ADD CONSTRAINT `deposeur` FOREIGN KEY (`id_client`) REFERENCES `client` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `depot_chez_pressing` FOREIGN KEY (`id_pressing`) REFERENCES `pressing` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `deposeur` FOREIGN KEY (`id_client`) REFERENCES `client` (`idClient`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `depot_chez_pressing` FOREIGN KEY (`id_pressing`) REFERENCES `pressing` (`idPressing`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `pressing`
 --
 ALTER TABLE `pressing`
-  ADD CONSTRAINT `contact_pressing` FOREIGN KEY (`id_contact`) REFERENCES `contact` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `proprietaire` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `contact_pressing` FOREIGN KEY (`id_contact`) REFERENCES `contact` (`idContact`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `proprietaire` FOREIGN KEY (`id_user`) REFERENCES `user` (`idUser`) ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `type_vetement`
 --
 ALTER TABLE `type_vetement`
-  ADD CONSTRAINT `pressing_du_type` FOREIGN KEY (`id_pressing`) REFERENCES `pressing` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `pressing_du_type` FOREIGN KEY (`id_pressing`) REFERENCES `pressing` (`idPressing`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `user_contact` FOREIGN KEY (`id_contact`) REFERENCES `contact` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_contact` FOREIGN KEY (`id_contact`) REFERENCES `contact` (`idContact`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `vetement_depose`
 --
 ALTER TABLE `vetement_depose`
-  ADD CONSTRAINT `type_vetement` FOREIGN KEY (`id_type_vetement`) REFERENCES `type_vetement` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `vetement_du_depot` FOREIGN KEY (`id_depot`) REFERENCES `depot` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `type_vetement` FOREIGN KEY (`id_type_vetement`) REFERENCES `type_vetement` (`idTypeVetement`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `vetement_du_depot` FOREIGN KEY (`id_depot`) REFERENCES `depot` (`idDepot`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
