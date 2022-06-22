@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+    require('../include/connexion_bd.php');
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -45,21 +48,31 @@
             <div class="vetement_form">
                 <div class="head">
                     <span>Type</span>
+                    <span>P/U</span>
                     <span>Quantite</span>
                 </div>
-                <div class="vetement_zone" id="vetement_zone1">
-                    <select name="habit1" id="">
-                        <option value="Costume" >Costume</option>
-                    </select>
-                    <span></span><input type="number" id="nombre1" class="nombre" onchange="ajoutVetement()" value="0" name="testnombre" required>
-                </div>
+                <?php 
+                    require('../include/connexion_bd.php');
+                    $query=$bdd->prepare('SELECT * FROM type_vetement WHERE id_pressing=?');
+                    $query->execute(array(1));
+                    while($reponse=$query->fetch()){
+                ?>
+                        <div class="vetement_zone" id="vetement_zone1">
+                            <span><?php echo($reponse['nom']); ?></span>
+                            <span><?php echo($reponse['prix']); ?></span>
+                            <input type="hidden" class="nbr_hid" value="<?php echo($reponse['prix']); ?>">
+                            <input type="number" onchange="calculTotal()" id="nombre1" class="nombre" value="0" name="testnombre1" required>
+                        </div>
+                <?php
+                    }
+                ?>
             </div>
 
             <div class="duo_flex montant_form">
                 <div class="montant_zone">
                     <h3>Avance:</h3>
                     <div>
-                        <input type="number" name="avance" id="" value="0">
+                        <input onchange="calculTotal()" type="number" id='avance' name="avance" id="" value="0">
                     </div>
                 </div>
                 <div class="date_zone">
@@ -71,13 +84,13 @@
             </div>
 
             <div class="revision_zone">
-                <h3>Montant total: <span id="montant_total">10000 FCFA</span></h3>
+                <h3>Montant total: <span id="montant_total">0 </span>FCFA</h3>
                 <hr>
-                <h3>Montant payé: <span id="montant_paye">6000 FCFA</span></h3>
+                <h3>Montant payé: <span id="montant_paye">0 </span>FCFA</h3>
                 <hr>
-                <h3>Reste à payé: <span id="reste">4000 FCFA</span></h3>
+                <h3>Reste à payé: <span id="reste">4000 </span>FCFA</h3>
                 <hr>
-                <p><button>Valider</button></p>
+                <p><button type="submit">Valider</button></p>
             </div>
         </form>
         <footer>

@@ -1,24 +1,28 @@
-i=3;
+a=0;
+nombre_de_champ=0;
+$('.nombre').change(calculTotal());
 
-function ajoutVetement(){
-    let test="<div class=\"vetement_zone\" id=\"vetement_zone1\"><select name=\"habit"+(++i)+"\" id=\"\"><option value=\"Costume\" >Costume</option></select><span></span><input type=\"number\" id=\"nombre\" class=\"nombre\" onchange=\"ajoutVetement()\" value=\""+(++i)+"\" name=\"testnombre"+(++i)+"\" required></div>";
-    let t=[1,2,3];
-    if($('.nombre:last').val()!='0'){          
-        /* $.ajax({
-            method: 'GET',
-            statusCode:'200',
-            url:"test.php?habit1=Costume&testnombre=45;y",
-            success : function (response) {
-                alert(response);
-            }
-        }) */
-        $('.vetement_form').html($('.vetement_form').html()+test);
+function calculTotal(){
+    //on cherche le nombre de champ
+    while(!isNaN($('.nombre').eq(a).val())){
+        nombre_de_champ++;
+        a++;
     }
-    else{
-        
+
+    //On addition les champ non vide
+
+    somme_total=0;
+    for(i=0;i<nombre_de_champ;i++){
+        if($('.nombre').eq(i).val()=="" || $('.nombre').eq(i).val()=="0"){
+            continue;
+        }
+        else{
+            tmp=parseInt($('.nbr_hid').eq(i).val());
+            somme_total+=(parseInt($('.nombre').eq(i).val())*(tmp));
+        }
     }
-}
 
-function addComponent(){
-
+    $('#montant_total').text(somme_total);
+    $('#montant_paye').text($('#avance').val());
+    $('#reste').text(somme_total-parseInt($('#avance').val()));
 }
