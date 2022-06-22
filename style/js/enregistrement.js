@@ -25,4 +25,22 @@ function calculTotal(){
     $('#montant_total').text(somme_total);
     $('#montant_paye').text($('#avance').val());
     $('#reste').text(somme_total-parseInt($('#avance').val()));
+    if(somme_total-parseInt($('#avance').val())<=0){
+        $('#reste').css('background-color','green');
+    }
+    else{
+        $('#reste').css('background-color','red');
+    }
+    if(somme_total>0){
+        $('#montant_total').css('background-color','green');
+    }
+    else{
+        $('#montant_total').css('background-color','red');
+    }
+    if($('#avance').val()>0){
+        $('#montant_paye').css('background-color','green');
+    }
+    else{
+        $('#montant_paye').css('background-color','red');
+    }
 }
