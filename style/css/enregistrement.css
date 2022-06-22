@@ -1,0 +1,119 @@
+@import url('../../api/fontawesome/css/all.css');
+@import url('header_gerant.css');
+@import url('footer.css');
+
+html{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+form{
+margin-bottom: 100px;
+}
+
+.client_form,.vetement_form,.montant_form,.revision_zone{
+    background-color: rgba(193, 220, 255, 0.466);
+    margin:10px;
+    margin-top: 100px;
+    padding:0 20px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(3, 3, 3, 0.199);
+    border: 1px solid green;
+}
+
+.vetement_form,.montant_form,.revision_zone{
+    margin-top: 30px;
+}
+
+.client_zone{
+    padding:20px 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.client_zone>label{
+    color:green;
+    font-weight: bold;
+}
+
+.client_zone>input{
+    background-color: transparent;
+    border:none;
+    border-bottom: 1px solid white;
+}
+
+
+.vetement_form>.head{
+    display: flex;
+    justify-content: space-between;
+    border-bottom:1px solid green ;
+    font-weight: bold;
+    padding:10px 0;
+}
+
+.vetement_zone{
+    margin:15px 0;
+    display: flex;
+    justify-content: space-between;
+
+}
+.vetement_zone>input{
+    max-width: 40px;
+    border: 1px solid green;
+    padding:5px;
+    border-radius: 7.5px;
+}
+.vetement_zone>select{
+    border: 1px solid green;
+    padding:5px;
+    border-radius: 7.5px;
+}
+
+.duo_flex{
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+}
+
+.duo_flex h3{
+    margin:0;
+}
+
+.duo_flex>*{
+    border:1px solid green;
+    margin: 15px;
+    padding:8px;
+    border-radius: 7.5px;
+    background-color: rgba(255, 255, 255, 0.253);
+}
+.montant_zone{
+    justify-content: center;
+}
+.montant_zone input, .date_zone input{
+    width:100px;
+    border: 1px solid green;
+    padding:5px;
+    border-radius: 7.5px;
+}
+
+.revision_zone h3,.revision_zone p{
+    text-align: center;
+}
+
+.revision_zone span{
+    padding:5px;
+    background-color: red;
+    color:white;
+    border-radius: 3.25px;
+    
+}
+.revision_zone button{
+    padding:10px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: green;
+    border: 1px solid white;
+    color:white;
+    border-radius: 7.5px;
+}
+
