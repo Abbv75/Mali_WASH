@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <?php
-    require('../include/connexion_bd.php');
+require('../include/connexion_bd.php');
 ?>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,6 +12,7 @@
     <script src="../api/jquery-3.6.0.min.js"></script>
     <title>Enregistrement</title>
 </head>
+
 <body>
     <div class="main">
         <!-- Le header du gerant -->
@@ -23,7 +25,7 @@
                 <div class="menu_dote"><i class="fas fa-bars"></i></div>
                 <div class="icone_zone">
                     <a href="index.html" title="acceuil"><i class="fas fa-home"></i> </a>
-                    <a href="pages/smartphone.html"  title="appareils"><i class="fas fa-tv"></i></a>
+                    <a href="pages/smartphone.html" title="appareils"><i class="fas fa-tv"></i></a>
                 </div>
             </nav>
         </header>
@@ -51,20 +53,20 @@
                     <span>P/U</span>
                     <span>Quantite</span>
                 </div>
-                <?php 
-                    require('../include/connexion_bd.php');
-                    $query=$bdd->prepare('SELECT * FROM type_vetement WHERE id_pressing=?');
-                    $query->execute(array(1));
-                    while($reponse=$query->fetch()){
-                ?>
-                        <div class="vetement_zone" id="vetement_zone1">
-                            <span><?php echo($reponse['nom']); ?></span>
-                            <span><?php echo($reponse['prix']); ?></span>
-                            <input type="hidden" class="nbr_hid" value="<?php echo($reponse['prix']); ?>">
-                            <input type="number" onchange="calculTotal()" id="nombre1" class="nombre" value="0" name="testnombre1" required>
-                        </div>
                 <?php
-                    }
+                require('../include/connexion_bd.php');
+                $query = $bdd->prepare('SELECT * FROM type_vetement WHERE id_pressing=?');
+                $query->execute(array(1));
+                while ($reponse = $query->fetch()) {
+                ?>
+                    <div class="vetement_zone" id="vetement_zone1">
+                        <span><?php echo ($reponse['nomTypeVetement']); ?></span>
+                        <span><?php echo ($reponse['prixTypeVetement']); ?></span>
+                        <input type="hidden" class="nbr_hid" value="<?php echo ($reponse['prixTypeVetement']); ?>">
+                        <input type="number" onchange="calculTotal()" id="nombre1" class="nombre" value="0" name="testnombre1" required>
+                    </div>
+                <?php
+                }
                 ?>
             </div>
 
@@ -97,10 +99,11 @@
             <span>Mali WASH</span>
             <span>+22366035300</span>
         </footer>
-        
-        
+
+
     </div>
     <script src="../style/js/header_gerant.js"></script>
     <script src="../style/js/enregistrement.js"></script>
 </body>
+
 </html>
