@@ -14,7 +14,7 @@
 
     <body>
         <?php
-        require('../traitement_php/classe_include.php');
+        require('../traitement_php/traitement.php');
         ?>
 
         <nav>
