@@ -16,7 +16,7 @@ nav{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 40px;
     gap: 150px;
     color: #fff;
     text-decoration: none;
@@ -24,7 +24,7 @@ nav{
 .container{
   max-width: 440px;
   padding: 0 20px;
-  margin: 170px auto;
+  margin: 100px auto;
 }
 .wrapper{
   width: 100%;

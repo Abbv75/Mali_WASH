@@ -11,12 +11,11 @@
 </head>
 
 <body>
+    <?php
+        setcookie('login', '',1,'/');
+    ?>
 
     <body>
-        <?php
-        require('../traitement_php/classe_include.php');
-        ?>
-
         <nav>
             <div class="logo">
                 <a href="#">Le logo</a>
@@ -30,7 +29,7 @@
             <div class="wrapper">
 
                 <div class="title"><span>Connexion</span></div>
-                <form action="../traitement_php/traitement.php" method="post">
+                <form action="../traitement_php/traitement_connexion.php" method="post">
                     <div class="row">
                         <i class="fas fa-user"></i>
                         <input type="text" placeholder="Email ou numero" required name="pseudo">

@@ -58,9 +58,9 @@
                     while($reponse=$query->fetch()){
                 ?>
                         <div class="vetement_zone" id="vetement_zone1">
-                            <span><?php echo($reponse['nom']); ?></span>
-                            <span><?php echo($reponse['prix']); ?></span>
-                            <input type="hidden" class="nbr_hid" value="<?php echo($reponse['prix']); ?>">
+                            <span><?php echo($reponse['nomTypeVetement']); ?></span>
+                            <span><?php echo($reponse['prixTypeVetement']); ?></span>
+                            <input type="hidden" class="nbr_hid" value="<?php echo($reponse['prixTypeVetement']); ?>">
                             <input type="number" onchange="calculTotal()" id="nombre1" class="nombre" value="0" name="testnombre1" required>
                         </div>
                 <?php
