@@ -1,18 +1,16 @@
 <?php
-require("classe_include.php");
-if (isset($_POST['envoyer'])) {
-    $mail = htmlspecialchars($_POST['pseudo']);
-    $pass = htmlspecialchars($_POST['mdp']);
+    require('../include/connexion_bd.php');
+    if (isset($_POST['envoyer'])) {
+        $login = htmlspecialchars($_POST['pseudo']);
+        $pass = htmlspecialchars($_POST['mdp']);
 
-    $cheik = $bdd->prepare('SELECT * FROM user WHERE login=?');
-    $cheik->execute(array($mail));
-    if ($exist = $cheik->fetch()) {
-        if ($pass == $exist['mot_de_pass']) {
-            echo ("bienvenue Mr");
+        $query= $bdd->prepare('SELECT * FROM user WHERE login=? AND mot_de_pass=?;');
+        $query->execute(array($login, $pass));
+        if ($query->fetch()) {
+            setcookie('login', $login,time()+365*24*3600,'/');
+            echo('Bienvenue mec');
         } else {
-            echo ("erreur de mot de passe");
+            echo ("erreur de login");
         }
-    } else {
-        echo ("erreur de login");
     }
-}
+?>

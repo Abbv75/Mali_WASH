@@ -13,7 +13,18 @@
 <body>
     <?php
     require("../include/connexion_bd.php");
-    $pressing = $bdd->query("SELECT * FROM pressing,user WHERE pressing.id_user=user.idUser");
+    if(!isset($_COOKIE['login'])){
+        header('Location:connexion.php?etat=1');
+        //montre une pop up pour le dire de se connecter
+    }
+    //Selection de l'utilisateur
+    $query=$bdd->prepare("SELECT * FROM user WHERE login=?");
+
+    $query->execute(array($_COOKIE['login']));
+    $current_user=$query->fetch();
+
+    $pressing = $bdd->prepare("SELECT * FROM pressing,user WHERE pressing.id_user=user.idUser AND user.idUser=?;");
+    $pressing->execute(array($current_user['idUser']));
     $ligne = $pressing->fetch();
     ?>
 
@@ -33,27 +44,15 @@
             </div>
             <ul class="box-info">
                 <?php
-                $donner = $bdd->query("SELECT * FROM pressing,depot WHERE depot.id_pressing = pressing.idPressing");
-                $dateexp = $bdd->query("SELECT  DATE_ADD(date_inscription, INTERVAL 30 DAY) FROM pressing");
-                $somme = $bdd->query("SELECT prixTotal FROM depot,pressing WHERE depot.id_pressing=pressing.idPressing");
-
-                $e = $dateexp->fetch();
-
-
-
+                $query = $bdd->prepare("SELECT * FROM depot,pressing WHERE depot.id_pressing = pressing.idPressing AND pressing.id_user=?" );
+                $query->execute(array($current_user['idUser']));
+                $dateexp = $bdd->query("SELECT  * FROM pressing WHERE");
+                
                 $row = 0;
-                while ($commande = $donner->fetch()) {
+                while ($commande = $query->fetch()) {
                     $row++;
                 }
-                $gaintotal = 0;
-                while ($gain = $somme->fetch()) {
-                    $gaintotal += $gain['prixTotal'];
-                }
-
-
-
                 ?>
-
                 <li>
                     <i class="fa-solid fa-cash-register"></i>
                     <span class="text">
@@ -61,6 +60,17 @@
                         <p>Nombre total de depots</p>
                     </span>
                 </li>
+
+                <?php
+                $query = $bdd->prepare("SELECT * FROM depot,pressing WHERE depot.id_pressing = pressing.idPressing AND pressing.id_user=?" );
+                $query->execute(array($current_user['idUser']));
+                $gaintotal = 0;
+                while ($gain = $query->fetch()) {
+                    $gaintotal += $gain['prixTotal'];
+                }
+
+                ?>
+
                 <li>
                     <i class="fa-solid fa-dollar-sign"></i>
                     <span class="text">
@@ -68,10 +78,17 @@
                         <p>gain total</p>
                     </span>
                 </li>
+
+                <?php
+                $query = $bdd->prepare("SELECT date_fin_abonnement FROM pressing WHERE pressing.id_user=?" );
+                $query->execute(array($current_user['idUser']));
+                $query=$query->fetch();
+                ?>
+
                 <li>
                     <i class="fa-regular fa-calendar"></i>
                     <span class="text">
-                        <h3>Date.... </h3>
+                        <h3><?php echo($query['date_fin_abonnement']) ?></h3>
                         <p>Date fin abonnement</p>
                     </span>
                 </li>
